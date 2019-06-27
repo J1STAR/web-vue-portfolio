@@ -1,28 +1,48 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+    <div id="app">
+        <app-header/>
+
+        <transition name="page" mode="out-in">
+            <keep-alive>
+                <router-view></router-view>
+            </keep-alive>
+        </transition>
+
+        <app-footer/>
+    </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+    import appHeader from './components/PortfolioHeader.vue'
+    import appFooter from './components/PortfolioFooter.vue'
+    import jQuery from 'jquery'
 
-export default {
-  name: 'app',
-  components: {
-    HelloWorld
-  }
-}
+    global.jQuery = jQuery
+    global.$ = jQuery
+
+    export default {
+        name: 'app',
+        components: {
+            appHeader, appFooter
+        },
+        data() {
+            return {
+                title: ''
+            }
+        }
+    }
 </script>
 
 <style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+    @import url('https://fonts.googleapis.com/css?family=Roboto:700&display=swap');
+
+    .page-enter-active, .page-leave-active {
+        transition: opacity 0.3s, transform 0.3s;
+    }
+
+    .page-enter, .page-leave-to {
+        opacity: 0;
+        transform: translateX(-30%);
+    }
+
 </style>
